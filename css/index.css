@@ -45,3 +45,43 @@ body {
   background-color: var(--bg-color);
   color: var(--text-color);
 }
+
+.container{
+  max-width: 95%;
+  margin: 0 auto;
+  padding: 1rem;
+  position: relative;
+}
+
+
+.header-container{
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: .1rem solid var(--text-color);
+  padding: .5rem;
+}
+
+.header-logo svg
+{
+  width: 2rem;
+  height: 2rem;
+}
+
+.theme-icon svg
+{
+  width: 2rem;
+  height: 2rem;
+}
+
+.btn:hover {
+  transform: scale(1.2);
+}
+
+.header-title
+{
+  font-size: 2rem;
+  line-height: 0;
+
+}
