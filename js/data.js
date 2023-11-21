@@ -206,3 +206,7 @@ export function deleteGame(id){
         res = true;
     }
 }
+
+export function getAllGame(){
+    return games
+} 
