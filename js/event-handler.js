@@ -1,4 +1,4 @@
-import { getAllGame } from "./data.js";
+import { getAllGame, getById } from "./data.js";
 import { events, on } from "./events.js";
 import { addStringToRoot, clearRoot } from "./render.js";
 
@@ -23,14 +23,50 @@ function getAllGameEventHandler() {
         </div>
       </div>`;
 
-      cardsHtml += tmp;
+        cardsHtml += tmp;
     }
 
     clearRoot(1)
-    addStringToRoot('game-card-container', cardsHtml)
+    addStringToRoot('game-card-container', cardsHtml, 'div')
+    document.querySelector('.game-card-container').addEventListener('click', (event) => {
+        const curCard = event.target.closest('.game-card');
+        document.dispatchEvent(new CustomEvent(events.showEditForm, {detail: curCard.getAttribute('id')}))
+    })
 }
 
-export function initCustomEvents(){
+function showEditFormHandler(id) {
+    console.log(id)
+    const game = getById(id);
+    if (game != null) {
+
+        const form = `
+        <form class="game-form" action="">
+        <input type="hidden", value="${game.id}">
+        <div class="input-container">
+          <div class="label-wrap">
+            <label for="title">title:</label>
+          </div>
+          <input class="game-input-txt" type="text" name="title" value = "${game.title}">
+          <div class="label-wrap">
+          <label for="description">description:</label>
+          </div>
+          <input class="game-input-txt" type="text" name="description" value = "${game.short_description}">
+        </div>
+
+        <div class="btn-container">
+          <button class="update-btn btn std-btn"> Update </button>
+          <button class="delete-btn btn std-btn"> Delete</button>
+        </div> 
+      </form>`
+
+      clearRoot(1);
+      console.log("FFF");
+      addStringToRoot('redactor-game-field', form, 'div')
+    }
+}
+
+export function initCustomEvents() {
     on(events.showAllGames, getAllGameEventHandler)
+    on(events.showEditForm, showEditFormHandler)
 }
 

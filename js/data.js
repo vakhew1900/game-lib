@@ -162,7 +162,7 @@ export function getById(id) {
     for (let game of games) {
         res = (game.id == id) ? game : res;
     }
-    console.log(games)
+    
     return res;
 }
 

@@ -5,13 +5,17 @@ export const events = {
   showAllGames : "showAllGames",
   editGame: "editGame",
   deleteGame: "deleteGame",
-  createGame: "createGame"
+  createGame: "createGame",
+  showEditForm: "showEditForm",
 };
 
 
 export function on(eventName, callback) {
     document.addEventListener(eventName, (event) => {
+      console.log(event)
       callback(event.detail);
     });
   }
   
+
+
