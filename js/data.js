@@ -162,7 +162,7 @@ export function getById(id) {
     for (let game of games) {
         res = (game.id == id) ? game : res;
     }
-    
+
     return res;
 }
 
@@ -178,14 +178,13 @@ export function createGame(title, thumbnail, short_description) {
     console.log(games)
 }
 
-export function updateGame(id, title, thumbnail, short_description) {
+export function updateGame(id, title, short_description) {
 
     let res = false;
     const game = getById(id);
 
     if (game != null) {
         game.title = title;
-        game.thumbnail = thumbnail;
         game.short_description = short_description;
         res = true;
         console.log(games)

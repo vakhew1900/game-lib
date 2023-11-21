@@ -1,4 +1,4 @@
-import { getAllGame, getById } from "./data.js";
+import { getAllGame, getById, updateGame } from "./data.js";
 import { events, on } from "./events.js";
 import { addStringToRoot, clearRoot } from "./render.js";
 
@@ -41,7 +41,7 @@ function showEditFormHandler(id) {
 
         const form = `
         <form class="game-form" action="">
-        <input type="hidden", value="${game.id}">
+        <input type="hidden", name = "game-id" value="${game.id}">
         <div class="input-container">
           <div class="label-wrap">
             <label for="title">title:</label>
@@ -60,13 +60,26 @@ function showEditFormHandler(id) {
       </form>`
 
       clearRoot(1);
-      console.log("FFF");
       addStringToRoot('redactor-game-field', form, 'div')
+     
+      document.querySelector('.update-btn').addEventListener('click', (event) => {
+        event.preventDefault()
+        const formData = new FormData(document.querySelector('.game-form'))
+        document.dispatchEvent(new CustomEvent(events.editGame, {detail: {id : formData.get('game-id'), title : formData.get('title'), short_description: formData.get('description')}}))
+      })
+
     }
+}
+
+function editGameHandler(game){
+    console.log(game)
+    updateGame(game.id, game.title, game.short_description);
+    document.dispatchEvent(new Event(events.showAllGames))
 }
 
 export function initCustomEvents() {
     on(events.showAllGames, getAllGameEventHandler)
     on(events.showEditForm, showEditFormHandler)
+    on(events.editGame, editGameHandler)
 }
 
