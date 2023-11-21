@@ -8,6 +8,10 @@ import { changeTheme } from "./theme.js";
 function addIconListener() {
     const themeIcon = document.querySelector('.theme-icon');
     themeIcon.addEventListener('click', (event) => changeTheme())
+
+    document.querySelector('.header-logo').addEventListener('click', (event) => {
+        document.dispatchEvent(new Event(events.showAllGames))
+    })
 }
 
 function start() {

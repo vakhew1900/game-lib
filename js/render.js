@@ -28,7 +28,7 @@ export function renderHeader(){
 
     const header = `
     <div class="header-container container">
-      <div class="header-logo">
+      <div class="header-logo btn">
        ${headerLogoIcon()}
       </div>
       <div class="header-title">
