@@ -1,4 +1,4 @@
-import { getAllGame, getById, updateGame } from "./data.js";
+import { deleteGame, getAllGame, getById, updateGame } from "./data.js";
 import { events, on } from "./events.js";
 import { addStringToRoot, clearRoot } from "./render.js";
 
@@ -68,7 +68,19 @@ function showEditFormHandler(id) {
         document.dispatchEvent(new CustomEvent(events.editGame, {detail: {id : formData.get('game-id'), title : formData.get('title'), short_description: formData.get('description')}}))
       })
 
+      document.querySelector('.delete-btn').addEventListener('click', (event) => {
+        event.preventDefault()
+        const formData = new FormData(document.querySelector('.game-form'))
+        document.dispatchEvent(new CustomEvent(events.deleteGame, {detail: formData.get('game-id')}))
+      })      
+
     }
+}
+
+function deleteGameHandler(id)
+{
+    deleteGame(id)
+    document.dispatchEvent(new Event(events.showAllGames))
 }
 
 function editGameHandler(game){
@@ -81,5 +93,6 @@ export function initCustomEvents() {
     on(events.showAllGames, getAllGameEventHandler)
     on(events.showEditForm, showEditFormHandler)
     on(events.editGame, editGameHandler)
+    on(events.deleteGame, deleteGameHandler)
 }
 
