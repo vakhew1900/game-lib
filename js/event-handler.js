@@ -17,9 +17,10 @@ function getAllGameEventHandler() {
         <div class="game-card-title">
           ${game.title}
         </div>
-
-        <div class="game-card-text">
-          ${game.short_description}
+        <div class="game-card-text-container"> 
+          <div class="game-card-text">
+            ${game.short_description}
+          </div>
         </div>
       </div>`;
 
