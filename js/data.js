@@ -176,6 +176,8 @@ export function createGame(title, thumbnail, short_description) {
 
     games.push(game)
     console.log(games)
+
+    return game
 }
 
 export function updateGame(id, title, short_description) {

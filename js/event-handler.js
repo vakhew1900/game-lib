@@ -1,6 +1,6 @@
-import { deleteGame, getAllGame, getById, updateGame } from "./data.js";
+import { createGame, deleteGame, getAllGame, getById, updateGame } from "./data.js";
 import { events, on } from "./events.js";
-import { addStringToRoot, clearRoot } from "./render.js";
+import { addStringToRoot, clearRoot, renderCard, renderForm } from "./render.js";
 
 
 function getAllGameEventHandler() {
@@ -9,30 +9,47 @@ function getAllGameEventHandler() {
     let cardsHtml = ''
 
     for (let game of games) {
-        const tmp = `<div class="game-card" id = "${game.id}">
-        <div class="img-game-card-container">
-          <img class="game-card-img сontain-img" src="${game.thumbnail}" alt="">
-        </div>
-
-        <div class="game-card-title">
-          ${game.title}
-        </div>
-        <div class="game-card-text-container"> 
-          <div class="game-card-text">
-            ${game.short_description}
-          </div>
-        </div>
-      </div>`;
-
+        const tmp = renderCard(game)
         cardsHtml += tmp;
     }
 
     clearRoot(1)
+    renderForm()
     addStringToRoot('game-card-container', cardsHtml, 'div')
     document.querySelector('.game-card-container').addEventListener('click', (event) => {
         const curCard = event.target.closest('.game-card');
         document.dispatchEvent(new CustomEvent(events.showEditForm, {detail: curCard.getAttribute('id')}))
     })
+
+    document.querySelector('.create-btn').addEventListener('click', (event) => {
+      event.preventDefault()
+      const formData = new FormData(document.querySelector('.game-form'))
+      document.dispatchEvent(new CustomEvent(events.createGame, {detail: {title : formData.get('title'), short_description: formData.get('description')}}))
+    })
+
+    document.querySelector('.cancel-btn').addEventListener('click', (event) => {
+      event.preventDefault()
+      document.querySelectorAll('.game-input-txt').forEach((input) => {console.log(input); input.value = ""; })
+    })
+
+}
+
+
+function createGameHandler({title, short_description})
+{   
+   console.log(title + short_description)
+
+   if(title == "" || short_description == "")
+   {
+      return
+   }
+
+   const link = 'https://n1s1.hsmedia.ru/5c/a9/92/5ca9922dcd2f2a2304a3851c058f020f/1585x951_0xac120003_9986014371588926575.jpg'
+   const game = createGame(title, link, short_description);
+   const gameCard = renderCard(game)
+
+   document.querySelector('.game-card-container').insertAdjacentHTML('beforeend', gameCard)
+
 }
 
 function showEditFormHandler(id) {
@@ -74,7 +91,7 @@ function showEditFormHandler(id) {
         const formData = new FormData(document.querySelector('.game-form'))
         document.dispatchEvent(new CustomEvent(events.deleteGame, {detail: formData.get('game-id')}))
       })      
-
+      
     }
 }
 
@@ -95,5 +112,6 @@ export function initCustomEvents() {
     on(events.showEditForm, showEditFormHandler)
     on(events.editGame, editGameHandler)
     on(events.deleteGame, deleteGameHandler)
+    on(events.createGame, createGameHandler)
 }
 

@@ -43,3 +43,48 @@ export function renderHeader(){
     addStringToRoot("", header, 'header')
 }
 
+
+export function renderForm()
+{
+  const form = `
+        <form class="game-form" action="">
+        <input type="hidden", name = "game-id" value="">
+        <div class="input-container">
+          <div class="label-wrap">
+            <label for="title">title:</label>
+          </div>
+          <input class="game-input-txt" type="text" name="title" value = "">
+          <div class="label-wrap">
+          <label for="description">description:</label>
+          </div>
+          <input class="game-input-txt" type="text" name="description" value = "">
+        </div>
+
+        <div class="btn-container">
+          <button class="create-btn btn std-btn"> Create </button>
+          <button class="cancel-btn btn std-btn"> Cancel </button>
+        </div> 
+      </form>`
+
+      addStringToRoot('add-game-field', form, 'div');
+}
+
+
+export function renderCard(game)
+{
+    return`<div class="game-card" id = "${game.id}">
+        <div class="img-game-card-container">
+          <img class="game-card-img сontain-img" src="${game.thumbnail}" alt="">
+        </div>
+
+        <div class="game-card-title">
+          ${game.title}
+        </div>
+        <div class="game-card-text-container"> 
+          <div class="game-card-text">
+            ${game.short_description}
+          </div>
+        </div>
+      </div>`;
+
+}
