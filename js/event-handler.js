@@ -1,10 +1,11 @@
-import { createGame, deleteGame, getAllGame, getById, updateGame } from "./data.js";
+import { createGame, deleteGame, getAllGame, getById, updateGame, getGamesByText } from "./data.js";
 import { events, on } from "./events.js";
-import { addStringToRoot, clearRoot, renderCard, renderForm } from "./render.js";
+import { addStringToRoot, clearRoot, renderCard, renderForm, renderSearch } from "./render.js";
 
 
-function getAllGameEventHandler() {
-    const games = getAllGame()
+function getGamesByTextEventHandler(text) {
+    console.log("text:" + text)
+    const games = getGamesByText(text)
 
     let cardsHtml = ''
 
@@ -14,6 +15,7 @@ function getAllGameEventHandler() {
     }
 
     clearRoot(1)
+    renderSearch()
     renderForm()
     addStringToRoot('game-card-container', cardsHtml, 'div')
     document.querySelector('.game-card-container').addEventListener('click', (event) => {
@@ -30,6 +32,14 @@ function getAllGameEventHandler() {
     document.querySelector('.cancel-btn').addEventListener('click', (event) => {
       event.preventDefault()
       document.querySelectorAll('.game-input-txt').forEach((input) => {console.log(input); input.value = ""; })
+    })
+
+    document.querySelector('.search-btn').addEventListener('click', (event) => {
+      event.preventDefault();
+      const formData = new FormData(document.querySelector('.search-form form'))
+      console.log(document.querySelector('.search-form form'))
+      console.log(formData.get('search'))
+      document.dispatchEvent(new CustomEvent(events.showAllGames, {detail: formData.get('search')}))
     })
 
 }
@@ -98,17 +108,17 @@ function showEditFormHandler(id) {
 function deleteGameHandler(id)
 {
     deleteGame(id)
-    document.dispatchEvent(new Event(events.showAllGames))
+    document.dispatchEvent(new CustomEvent(events.showAllGames, {detail:""}))
 }
 
 function editGameHandler(game){
     console.log(game)
     updateGame(game.id, game.title, game.short_description);
-    document.dispatchEvent(new Event(events.showAllGames))
+    document.dispatchEvent(new CustomEvent(events.showAllGames, {detail: ""}))
 }
 
 export function initCustomEvents() {
-    on(events.showAllGames, getAllGameEventHandler)
+    on(events.showAllGames, getGamesByTextEventHandler)
     on(events.showEditForm, showEditFormHandler)
     on(events.editGame, editGameHandler)
     on(events.deleteGame, deleteGameHandler)

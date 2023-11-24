@@ -167,7 +167,7 @@ body {
 
 
 .game-card-container {
-  margin-top: 100px;
+  margin-top: 30px;
   margin-bottom: 50px;
   display: flex;
   flex-wrap: wrap;
@@ -217,7 +217,7 @@ body {
   flex-direction: column;
   align-items: center;
   margin: auto;
-  margin-top: 5%;
+  margin-top: 3%;
   background-color: var(--cardBackground);
   max-width: 40%;
   padding: 40px;
@@ -250,10 +250,34 @@ body {
   align-items: center;
   gap: .5rem
 }
-.game-input-txt{
+input[type=text]{
   width: 100%;
   height: 1.6rem;
   border-radius: .3rem;
+}
+
+
+
+.search-form  form{
+  max-width: 600px;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: .5rem;
+}
+
+@media (max-width: 800px) {
+  .search-form  form
+  {
+    max-width: 90%;
+  }
+}
+
+.search-form input[type=text]{
+  /* max-width: 70%; */
+  height: 2rem;
 }
  
 .input-container label {
@@ -289,6 +313,7 @@ body {
   display: inline-block;
   font-size: 16px;
   border-radius: .2rem;
+  background-color: var(--primary-bg-color);
 }
 
 .delete-btn{
@@ -299,3 +324,6 @@ body {
   background-color: var(--primary-bg-color);
 }
 
+.search-form {
+  margin-top: 2%;
+}

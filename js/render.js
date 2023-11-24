@@ -88,3 +88,21 @@ export function renderCard(game)
       </div>`;
 
 }
+
+export function renderSearch(){
+    const search = `
+      <form >
+        <input type="text" placeholder="search" name="search">
+        <button class="btn std-btn search-btn">Search</button>
+      </form>
+    `
+    addStringToRoot('search-form', search, 'div');
+
+    document.querySelector('.search-btn').addEventListener('click', (events) => {
+      events.preventDefault();
+      const formData = new FormData(document.querySelector('.search-form form'))
+      console.log(document.querySelector('.search-form form'))
+      console.log(formData.get('search'))
+      document.dispatchEvent(new CustomEvent(events.showAllGames, {detail: "xxxx"}))
+    })
+}

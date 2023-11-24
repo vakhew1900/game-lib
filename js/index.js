@@ -22,7 +22,7 @@ function start() {
 
 function initGamesLib() {
     renderHeader()
-    document.dispatchEvent(new Event(events.showAllGames))
+    document.dispatchEvent(new CustomEvent(events.showAllGames, {detail: ""}))
     addIconListener()
 }
 

@@ -211,3 +211,19 @@ export function deleteGame(id){
 export function getAllGame(){
     return games
 } 
+
+
+export function getGamesByText(text)
+{
+    let retGames = []
+
+    for(let game of games){
+        
+        if (game.title.toLowerCase().indexOf(text.toLowerCase()) >= 0 || game.short_description.toLowerCase().indexOf(text.toLowerCase()) >= 0)
+        {
+            retGames.push(game)
+        }
+    }
+
+    return retGames
+}
