@@ -156,7 +156,10 @@ const games = [
 ]
 
 
-export function getById(id) {
+
+
+
+export function getById(id, games) {
 
     let res = null;
     for (let game of games) {
@@ -174,7 +177,9 @@ export function createGame(title, thumbnail, short_description) {
         short_description: short_description
     }
 
+    const games = getAllGame()
     games.push(game)
+    localStorage.setItem("games", JSON.stringify(games));
     console.log(games)
 
     return game
@@ -183,14 +188,18 @@ export function createGame(title, thumbnail, short_description) {
 export function updateGame(id, title, short_description) {
 
     let res = false;
-    const game = getById(id);
+    const games = getAllGame()
+    const game = getById(id, games);
 
     if (game != null) {
         game.title = title;
         game.short_description = short_description;
         res = true;
         console.log(games)
+        localStorage.setItem("games", JSON.stringify(games));
     }
+
+    
     return res;
 }
 
@@ -198,18 +207,28 @@ export function deleteGame(id){
     
     let res = false;
 
-    const game = getById(id);
+    const games = getAllGame();
+    const game = getById(id, games);
 
     if (game != null){
         const index = games.indexOf(game);
         games.splice(index, 1);
         console.log(games)
+        localStorage.setItem("games", JSON.stringify(games));
         res = true;
     }
 }
 
 export function getAllGame(){
-    return games
+
+
+    if(localStorage.getItem("games") == null || localStorage.getItem("games") == undefined)
+    {
+    localStorage.setItem("games", JSON.stringify(games));
+    }
+
+    return JSON.parse(localStorage.getItem("games"));
+    
 } 
 
 
@@ -217,6 +236,7 @@ export function getGamesByText(text)
 {
     let retGames = []
 
+    const games = getAllGame();
     for(let game of games){
         
         if (game.title.toLowerCase().indexOf(text.toLowerCase()) >= 0 || game.short_description.toLowerCase().indexOf(text.toLowerCase()) >= 0)
@@ -227,3 +247,4 @@ export function getGamesByText(text)
 
     return retGames
 }
+

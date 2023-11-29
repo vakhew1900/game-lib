@@ -64,7 +64,7 @@ function createGameHandler({title, short_description})
 
 function showEditFormHandler(id) {
     console.log(id)
-    const game = getById(id);
+    const game = getById(id, getAllGame())
     if (game != null) {
 
         const form = `

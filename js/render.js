@@ -98,11 +98,5 @@ export function renderSearch(){
     `
     addStringToRoot('search-form', search, 'div');
 
-    document.querySelector('.search-btn').addEventListener('click', (events) => {
-      events.preventDefault();
-      const formData = new FormData(document.querySelector('.search-form form'))
-      console.log(document.querySelector('.search-form form'))
-      console.log(formData.get('search'))
-      document.dispatchEvent(new CustomEvent(events.showAllGames, {detail: "xxxx"}))
-    })
+    
 }
